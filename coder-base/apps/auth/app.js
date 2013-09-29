@@ -346,31 +346,9 @@ exports.api_addpassword_handler = function( req, res ) {
         return;
     }
 
-    var spawn = require('child_process').spawn;
     var err=0;
     //device_settings.device_name = devicename;
-    var erroutput = "";
-    var output = "";
-    var setpipass = process.cwd() + '/sudo_scripts/setpipass';
-    var setpass = spawn( '/usr/bin/sudo', [setpipass] );
-    setpass.stdout.on( 'data', function( d ) {
-        output += d;
-    });
-    setpass.stderr.on( 'data', function( d ) {
-        erroutput += d;
-    });
 
-    setpass.addListener( 'exit', function( code, signal ) {
-        err = code;
-        
-        
-        if ( err ) {
-            res.json({
-                status: "error",
-                error: erroutput
-            });
-            return;
-        }
 
         //TODO - Load hashed password
         var s = bcrypt.genSaltSync(10);
@@ -389,12 +367,6 @@ exports.api_addpassword_handler = function( req, res ) {
                 error: "Could not save device settings."
             });
         }
-        
-    });
-    setpass.stdin.write(pass + '\n');
-    setpass.stdin.write(pass + '\n');
-    setpass.stdin.end();
-
 };
 
 
@@ -431,31 +403,8 @@ exports.api_changepassword_handler = function( req, res ) {
         return;
     }
 
-    var spawn = require('child_process').spawn;
     var err=0;
-    //device_settings.device_name = devicename;
-    var erroutput = "";
-    var output = "";
-    var setpipass = process.cwd() + '/sudo_scripts/setpipass';
-    var setpass = spawn( '/usr/bin/sudo', [setpipass] );
-    setpass.stdout.on( 'data', function( d ) {
-        output += d;
-    });
-    setpass.stderr.on( 'data', function( d ) {
-        erroutput += d;
-    });
-
-    setpass.addListener( 'exit', function( code, signal ) {
-        err = code;
-        
-        
-        if ( err ) {
-            res.json({
-                status: "error",
-                error: erroutput
-            });
-            return;
-        }
+    //device_settings.device_name = devicename
 
         //TODO - Load hashed password
         var s = bcrypt.genSaltSync(10);
@@ -475,10 +424,6 @@ exports.api_changepassword_handler = function( req, res ) {
             });
         }
         
-    });
-    setpass.stdin.write(pass + '\n');
-    setpass.stdin.write(pass + '\n');
-    setpass.stdin.end();
 
 };
 
