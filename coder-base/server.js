@@ -263,7 +263,7 @@ params.extend( redirectapp );
 redirectapp.engine( 'html', cons.mustache );
 redirectapp.all( /.*/, function( req, res ) {
     util.log( 'redirect: ' + getHost(req) + " " + config.httpsVisiblePort + " " + req.url );
-    res.redirect("https://" + getHost(req) + ":" + config.httpsVisiblePort  + req.url); 
+    res.redirect("https://" + req.host + ":" + config.httpsVisiblePort  + req.url); 
 });
 
 startSSL();
